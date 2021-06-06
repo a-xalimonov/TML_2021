@@ -32,17 +32,25 @@ st.subheader('Первые 5 значений')
 st.write(data.head())
 st.write('Количество строк:', data.shape[0])
 st.write('Количество столбцов:', data.shape[1])
+st.write('Типы данных:', data.dtypes)
 
-# Цветовая карта
 st.subheader('Основные диаграммы')
+
+# Цветовые обозначения
 if st.checkbox('Добавить цветовые обозначения'):
     hue_ = "Country"
 else:
     hue_ = None
 
-fig, ax = plt.subplots(figsize=(25,15))
+# Парные диаграммы
+fig1 = sns.pairplot(data, height=6, aspect=1.5, hue=hue_)
+if (hue_):
+    fig1.legend.remove()
+st.pyplot(fig1)
+# Карта
+fig2, ax = plt.subplots(figsize=(25,15))
 sns.scatterplot(ax=ax, x='Longitude', y='Latitude', hue=hue_, data=data, legend=False)
-st.pyplot(fig)
+st.pyplot(fig2)
 
 # Соотношение обучающей и тестовой выборки
 st.subheader('Разбиение выборки на обучающую и тестовую')
